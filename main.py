@@ -1,6 +1,9 @@
 import numpy as np
 
-curveType = "0" #curveType values: 0 = RIAA curve,  1 =
+curveType = "0"
+#curveType is a potential parameter to use while generating output, 0 would be standard RIAA playback curve, 1 would
+#be IEC RIAA curve, 2 and on are to be determined. I think I will have it be input on execution or something I 
+#suppose.
 sampleRates = [22050, 24000, 44100, 48000, 96000] #common sampling rates halved to represent actual frequencies
 t1 = 0.00318
 t2 = 0.000318
