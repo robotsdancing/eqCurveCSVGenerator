@@ -1,9 +1,14 @@
+# argv.py
+import sys
 import numpy as np
 
-curveType = "0"
-#curveType is a potential parameter to use while generating output, 0 would be standard RIAA playback curve, 1 would
-#be IEC RIAA curve, 2 and on are to be determined. I think I will have it be input on execution or something I 
-#suppose.
+curveType = str(sys.argv[1:])
+curveType = curveType.replace("['", "")
+curveType = curveType.replace("']", "")
+if curveType == "":
+    curveType = "0"
+#curveType is a parameter to use while generating output, 0 would be standard RIAA playback curve, 1 would
+#be IEC RIAA curve, 2 and on are to be determined.
 sampleRates = [22050, 24000, 44100, 48000, 96000] #common sampling rates halved to represent actual frequencies
 t1 = 0.00318
 t2 = 0.000318
@@ -11,7 +16,9 @@ t3 = 0.000075
 t4 = 0.00795
 pi = 3.14159265358979323846264338327950 #excessive number of digits of pi due to knowledge of too many digits.
 for j in range(0, len(sampleRates)):
-
+    if curveType.isdigit() is False:
+        print("Non supported entered.")
+        break
     for i in range(20, sampleRates[j]+1): #start at 20 to prevent amplification of subsonic frequenies
         # file written to is in format frequency, amplitude.
         #formula for RIAA curve and IEC RIAA curve found at https://www.bonavolta.ch/hobby/en/audio/riaa.htm
@@ -38,3 +45,6 @@ for j in range(0, len(sampleRates)):
             f.write(str(amp))
             f.write("\n")
             f.close()
+        else:
+            print("Non supported input entered.")
+            break
